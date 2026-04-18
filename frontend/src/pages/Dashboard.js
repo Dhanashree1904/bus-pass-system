@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { passAPI } from "../services/api";
+import QRCode from "qrcode.react";
+import "../styles/Dashboard.css";
+
+const Dashboard = () => {
+  const { user, logout } = useAuth();
+  const [passes, setPasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPassType, setSelectedPassType] = useState("daily");
+
+  useEffect(() => {
+    fetchPasses();
+  }, []);
+
+  const fetchPasses = async () => {
+    try {
+      const { data } = await passAPI.getUserPasses();
+      setPasses(data.passes);
+    } catch (error) {
+      console.error("Error fetching passes", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBuyPass = async () => {
+    try {
+      const { data } = await passAPI.createPass({
+        passType: selectedPassType,
+        routes: [],
+      });
+      setPasses([...passes, data.pass]);
+      alert("Pass purchased successfully!");
+    } catch (error) {
+      alert("Error purchasing pass: " + error.response?.data?.message);
+    }
+  };
+
+  const handleCancelPass = async (passId) => {
+    if (window.confirm("Are you sure you want to cancel this pass?")) {
+      try {
+        await passAPI.cancelPass(passId);
+        setPasses(passes.filter((p) => p._id !== passId));
+        alert("Pass cancelled successfully!");
+      } catch (error) {
+        alert("Error cancelling pass");
+      }
+    }
+  };
+
+  return (
+    <div className="dashboard">
+      <nav className="navbar">
+        <div className="nav-content">
+          <h1>Bus Pass System</h1>
+          <div>
+            <span>Welcome, {user?.name}</span>
+            <button onClick={logout} className="logout-btn">
+              Logout
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="dashboard-content">
+        <div className="buy-pass-section">
+          <h2>Buy New Pass</h2>
+          <select
+            value={selectedPassType}
+            onChange={(e) => setSelectedPassType(e.target.value)}
+          >
+            <option value="daily">Daily - $50</option>
+            <option value="weekly">Weekly - $300</option>
+            <option value="monthly">Monthly - $1000</option>
+            <option value="quarterly">Quarterly - $2700</option>
+            <option value="annual">Annual - $10000</option>
+          </select>
+          <button onClick={handleBuyPass} className="buy-btn">
+            Purchase Pass
+          </button>
+        </div>
+
+        <div className="passes-section">
+          <h2>Your Passes</h2>
+          {loading ? (
+            <p>Loading...</p>
+          ) : passes.length === 0 ? (
+            <p>No passes yet</p>
+          ) : (
+            <div className="passes-grid">
+              {passes.map((pass) => (
+                <div key={pass._id} className="pass-card">
+                  <h3>{pass.passType.toUpperCase()}</h3>
+                  <p>Price: ${pass.price}</p>
+                  <p>
+                    Valid:{" "}
+                    {new Date(pass.validFrom).toLocaleDateString()} -{" "}
+                    {new Date(pass.validUntil).toLocaleDateString()}
+                  </p>
+                  <p>Status: {pass.status}</p>
+                  {pass.qrCode && (
+                    <div className="qr-code">
+                      <QRCode value={pass.qrCode} size={150} />
+                    </div>
+                  )}
+                  {pass.status === "active" && (
+                    <button
+                      onClick={() => handleCancelPass(pass._id)}
+                      className="cancel-btn"
+                    >
+                      Cancel Pass
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

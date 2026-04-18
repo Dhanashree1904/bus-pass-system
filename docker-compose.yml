@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: buspass-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: buspass
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - buspass-network
+
+  backend:
+    build: ./backend
+    container_name: buspass-backend
+    ports:
+      - "5000:5000"
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/buspass
+      JWT_SECRET: your_secret_key_here
+      NODE_ENV: development
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - buspass-network
+
+  frontend:
+    image: node:18-alpine
+    container_name: buspass-frontend
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    command: sh -c "npm install && npm start"
+    networks:
+      - buspass-network
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
+
+networks:
+  buspass-network:
+    driver: bridge
