@@ -6,11 +6,11 @@ import QRCode from "qrcode.react";
 import "../styles/Dashboard.css";
 
 const passIcons = {
-  daily: "📅",
-  weekly: "📆",
-  monthly: "📊",
-  quarterly: "📈",
-  annual: "🎯",
+  daily: "fa-calendar-days",
+  weekly: "fa-calendar-week",
+  monthly: "fa-chart-bar",
+  quarterly: "fa-chart-line",
+  annual: "fa-bullseye",
 };
 
 const Dashboard = () => {
@@ -68,16 +68,16 @@ const Dashboard = () => {
           <div className="nav-links">
             <span>Welcome, {user?.name}</span>
             <button onClick={() => navigate("/profile")} className="nav-link-btn">
-              👤 Profile
+              <i className="fas fa-user"></i> Profile
             </button>
             <button onClick={() => navigate("/faqs")} className="nav-link-btn">
-              ❓ FAQs
+              <i className="fas fa-question-circle"></i> FAQs
             </button>
             <button onClick={() => navigate("/support")} className="nav-link-btn">
-              💬 Support
+              <i className="fas fa-comments"></i> Support
             </button>
             <button onClick={() => navigate("/admin")} className="nav-link-btn">
-              ⚙️ Admin
+              <i className="fas fa-cog"></i> Admin
             </button>
             <button onClick={logout} className="logout-btn">
               Logout
@@ -115,7 +115,7 @@ const Dashboard = () => {
               {passes.map((pass) => (
                 <div key={pass._id} className="pass-card">
                   <div className="pass-header">
-                    <span className="pass-icon">{passIcons[pass.passType]}</span>
+                    <span className="pass-icon"><i className={`fas ${passIcons[pass.passType]}`}></i></span>
                     <h3>{pass.passType.toUpperCase()}</h3>
                     <span className={`status-badge ${pass.status}`}>
                       {pass.status.toUpperCase()}

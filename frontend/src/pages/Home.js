@@ -12,7 +12,7 @@ const Home = () => {
       {/* Navigation Bar */}
       <nav className="home-navbar">
         <div className="nav-container">
-          <h1 className="logo">🚌 BusPass</h1>
+          <h1 className="logo"><i className="fas fa-bus"></i> BusPass</h1>
           <div className="nav-links">
             {user ? (
               <>
@@ -48,7 +48,7 @@ const Home = () => {
             </button>
           )}
         </div>
-        <div className="hero-image">🎫</div>
+        <div className="hero-image"><i className="fas fa-ticket"></i></div>
       </div>
 
       {/* Pass Types Section */}
@@ -56,7 +56,7 @@ const Home = () => {
         <h2>Choose Your Pass</h2>
         <div className="pass-types">
           <div className="pass-type-card">
-            <div className="pass-icon">📅</div>
+            <div className="pass-icon"><i className="fas fa-calendar-days"></i></div>
             <h3>Daily Pass</h3>
             <p className="price">₹50</p>
             <p>Perfect for occasional travelers</p>
@@ -68,7 +68,7 @@ const Home = () => {
           </div>
 
           <div className="pass-type-card">
-            <div className="pass-icon">📆</div>
+            <div className="pass-icon"><i className="fas fa-calendar-week"></i></div>
             <h3>Weekly Pass</h3>
             <p className="price">₹250</p>
             <p>Great for commuters</p>
@@ -81,7 +81,7 @@ const Home = () => {
 
           <div className="pass-type-card featured">
             <div className="badge">POPULAR</div>
-            <div className="pass-icon">📊</div>
+            <div className="pass-icon"><i className="fas fa-chart-bar"></i></div>
             <h3>Monthly Pass</h3>
             <p className="price">₹1200</p>
             <p>Best value for regular commuters</p>
@@ -93,7 +93,7 @@ const Home = () => {
           </div>
 
           <div className="pass-type-card">
-            <div className="pass-icon">📈</div>
+            <div className="pass-icon"><i className="fas fa-chart-line"></i></div>
             <h3>Quarterly Pass</h3>
             <p className="price">₹3000</p>
             <p>For long-term commuters</p>
@@ -105,7 +105,7 @@ const Home = () => {
           </div>
 
           <div className="pass-type-card">
-            <div className="pass-icon">🎯</div>
+            <div className="pass-icon"><i className="fas fa-bullseye"></i></div>
             <h3>Annual Pass</h3>
             <p className="price">₹10,000</p>
             <p>Maximum savings</p>
@@ -123,27 +123,27 @@ const Home = () => {
         <h2>Why Choose BusPass?</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <div className="feature-icon">📱</div>
+            <div className="feature-icon"><i className="fas fa-mobile"></i></div>
             <h3>Digital & Mobile</h3>
             <p>Manage your pass entirely on your phone</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">💰</div>
+            <div className="feature-icon"><i className="fas fa-wallet"></i></div>
             <h3>Save Money</h3>
             <p>Up to 40% cheaper than daily tickets</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">⚡</div>
+            <div className="feature-icon"><i className="fas fa-bolt"></i></div>
             <h3>Instant Activation</h3>
             <p>Get your pass immediately after purchase</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">📊</div>
+            <div className="feature-icon"><i className="fas fa-chart-line"></i></div>
             <h3>Track Usage</h3>
             <p>Monitor your trips and spending in real-time</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">🔒</div>
+            <div className="feature-icon"><i className="fas fa-lock"></i></div>
             <h3>Secure & Safe</h3>
             <p>Your data is encrypted and protected</p>
           </div>

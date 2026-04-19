@@ -61,7 +61,7 @@ const PassDetails = () => {
         <div className="detail-card main-card">
           <div className="card-header">
             <div className="pass-type-info">
-              <div className="pass-type-icon">📊</div>
+              <div className="pass-type-icon"><i className="fas fa-chart-bar"></i></div>
               <div>
                 <h2>{pass.passType.toUpperCase()} PASS</h2>
                 <p className={`status ${pass.status}`}>{pass.status}</p>

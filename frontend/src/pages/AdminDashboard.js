@@ -7,34 +7,19 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   const stats = {
-    totalUsers: 1250,
-    activeUsers: 845,
-    totalRevenue: 342500,
-    activePasses: 2100,
-    passTypes: {
-      daily: 450,
-      weekly: 380,
-      monthly: 820,
-      quarterly: 280,
-      annual: 170,
-    },
+    // TODO: Fetch these from /api/admin/stats endpoint
+    totalUsers: null,
+    activeUsers: null,
+    totalRevenue: null,
+    activePasses: null,
+    passTypes: {},
   };
 
-  const recentUsers = [
-    { id: 1, name: "Raj Kumar", email: "raj@example.com", joinDate: "2026-04-19", passes: 2 },
-    { id: 2, name: "Priya Singh", email: "priya@example.com", joinDate: "2026-04-18", passes: 1 },
-    { id: 3, name: "Amit Patel", email: "amit@example.com", joinDate: "2026-04-17", passes: 3 },
-    { id: 4, name: "Neha Sharma", email: "neha@example.com", joinDate: "2026-04-16", passes: 2 },
-    { id: 5, name: "Vikram Das", email: "vikram@example.com", joinDate: "2026-04-15", passes: 1 },
-  ];
+  // TODO: Fetch recent users from /api/admin/users endpoint
+  const recentUsers = [];
 
-  const topRoutes = [
-    { route: "Route 5", trips: 1240, revenue: 45000 },
-    { route: "Route 3", trips: 980, revenue: 35000 },
-    { route: "Route 7", trips: 850, revenue: 32000 },
-    { route: "Route 2", trips: 720, revenue: 28000 },
-    { route: "Route 9", trips: 610, revenue: 22000 },
-  ];
+  // TODO: Fetch top routes from /api/admin/routes endpoint
+  const topRoutes = [];
 
   return (
     <div className="admin-dashboard">
@@ -42,7 +27,7 @@ const AdminDashboard = () => {
         <button className="back-btn" onClick={() => navigate("/dashboard")}>
           ← Back to Dashboard
         </button>
-        <h1>🔐 Admin Dashboard</h1>
+        <h1><i className="fas fa-shield-alt"></i> Admin Dashboard</h1>
       </div>
 
       <div className="admin-nav">
@@ -80,38 +65,38 @@ const AdminDashboard = () => {
 
             <div className="stats-grid">
               <div className="stat-box">
-                <div className="stat-icon">👥</div>
+                <div className="stat-icon"><i className="fas fa-users"></i></div>
                 <div className="stat-info">
                   <p>Total Users</p>
-                  <h3>{stats.totalUsers}</h3>
-                  <span className="stat-change">+12 this week</span>
+                  <h3>{stats.totalUsers || "N/A"}</h3>
+                  <span className="stat-change">Loading data...</span>
                 </div>
               </div>
 
               <div className="stat-box">
-                <div className="stat-icon">✅</div>
+                <div className="stat-icon"><i className="fas fa-check-circle"></i></div>
                 <div className="stat-info">
                   <p>Active Users</p>
-                  <h3>{stats.activeUsers}</h3>
-                  <span className="stat-change">{((stats.activeUsers / stats.totalUsers) * 100).toFixed(1)}% active</span>
+                  <h3>{stats.activeUsers || "N/A"}</h3>
+                  <span className="stat-change">Loading data...</span>
                 </div>
               </div>
 
               <div className="stat-box">
-                <div className="stat-icon">💰</div>
+                <div className="stat-icon"><i className="fas fa-wallet"></i></div>
                 <div className="stat-info">
                   <p>Total Revenue</p>
-                  <h3>₹{stats.totalRevenue.toLocaleString()}</h3>
-                  <span className="stat-change">+₹45000 this month</span>
+                  <h3>{stats.totalRevenue ? "₹" + stats.totalRevenue.toLocaleString() : "N/A"}</h3>
+                  <span className="stat-change">Loading data...</span>
                 </div>
               </div>
 
               <div className="stat-box">
-                <div className="stat-icon">🎫</div>
+                <div className="stat-icon"><i className="fas fa-ticket-alt"></i></div>
                 <div className="stat-info">
                   <p>Active Passes</p>
-                  <h3>{stats.activePasses}</h3>
-                  <span className="stat-change">+180 today</span>
+                  <h3>{stats.activePasses || "N/A"}</h3>
+                  <span className="stat-change">Loading data...</span>
                 </div>
               </div>
             </div>
@@ -228,22 +213,22 @@ const AdminDashboard = () => {
             <h2>Reports & Analytics</h2>
             <div className="reports-grid">
               <div className="report-card">
-                <h3>📊 Monthly Report</h3>
+                <h3><i className="fas fa-chart-bar"></i> Monthly Report</h3>
                 <p>View detailed monthly statistics and trends</p>
                 <button className="report-btn">Generate Report</button>
               </div>
               <div className="report-card">
-                <h3>💾 Data Export</h3>
+                <h3><i className="fas fa-database"></i> Data Export</h3>
                 <p>Export user data, transactions, and reports</p>
                 <button className="report-btn">Export Data</button>
               </div>
               <div className="report-card">
-                <h3>🔍 Audit Log</h3>
+                <h3><i className="fas fa-search"></i> Audit Log</h3>
                 <p>View system activities and user actions</p>
                 <button className="report-btn">View Logs</button>
               </div>
               <div className="report-card">
-                <h3>⚙️ Settings</h3>
+                <h3><i className="fas fa-cog"></i> Settings</h3>
                 <p>Configure system settings and policies</p>
                 <button className="report-btn">Go to Settings</button>
               </div>

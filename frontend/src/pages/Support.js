@@ -53,7 +53,7 @@ const Support = () => {
 
           {submitted && (
             <div className="success-message">
-              ✅ Thank you! Your message has been sent successfully. We'll get
+              <i className="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We'll get
               back to you within 24 hours.
             </div>
           )}
