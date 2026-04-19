@@ -4,6 +4,14 @@ import { passAPI } from "../services/api";
 import QRCode from "qrcode.react";
 import "../styles/Dashboard.css";
 
+const passIcons = {
+  daily: "📅",
+  weekly: "📆",
+  monthly: "📊",
+  quarterly: "📈",
+  annual: "🎯",
+};
+
 const Dashboard = () => {
   const { user, logout } = useAuth();
   const [passes, setPasses] = useState([]);
@@ -71,11 +79,11 @@ const Dashboard = () => {
             value={selectedPassType}
             onChange={(e) => setSelectedPassType(e.target.value)}
           >
-            <option value="daily">Daily - $50</option>
-            <option value="weekly">Weekly - $300</option>
-            <option value="monthly">Monthly - $1000</option>
-            <option value="quarterly">Quarterly - $2700</option>
-            <option value="annual">Annual - $10000</option>
+            <option value="daily">Daily - ₹50</option>
+            <option value="weekly">Weekly - ₹250</option>
+            <option value="monthly">Monthly - ₹1200</option>
+            <option value="quarterly">Quarterly - ₹3000</option>
+            <option value="annual">Annual - ₹10000</option>
           </select>
           <button onClick={handleBuyPass} className="buy-btn">
             Purchase Pass
@@ -92,17 +100,29 @@ const Dashboard = () => {
             <div className="passes-grid">
               {passes.map((pass) => (
                 <div key={pass._id} className="pass-card">
-                  <h3>{pass.passType.toUpperCase()}</h3>
-                  <p>Price: ${pass.price}</p>
-                  <p>
-                    Valid:{" "}
-                    {new Date(pass.validFrom).toLocaleDateString()} -{" "}
-                    {new Date(pass.validUntil).toLocaleDateString()}
-                  </p>
-                  <p>Status: {pass.status}</p>
+                  <div className="pass-header">
+                    <span className="pass-icon">{passIcons[pass.passType]}</span>
+                    <h3>{pass.passType.toUpperCase()}</h3>
+                    <span className={`status-badge ${pass.status}`}>
+                      {pass.status.toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="pass-details">
+                    <p className="price">₹{pass.price}</p>
+                    <p className="validity">
+                      <strong>Valid:</strong> {" "}
+                      {new Date(pass.validFrom).toLocaleDateString("en-IN")} to{" "}
+                      {new Date(pass.validUntil).toLocaleDateString("en-IN")}
+                    </p>
+                  </div>
                   {pass.qrCode && (
                     <div className="qr-code">
-                      <QRCode value={pass.qrCode} size={150} />
+                      <QRCode 
+                        value={pass.qrCode} 
+                        size={120}
+                        level="H"
+                        includeMargin={true}
+                      />
                     </div>
                   )}
                   {pass.status === "active" && (

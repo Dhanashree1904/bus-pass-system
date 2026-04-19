@@ -1,13 +1,13 @@
 const BusPass = require("../models/BusPass");
 const User = require("../models/User");
 
-// Get pass pricing based on type
+// Get pass pricing based on type (in Indian Rupees)
 const getPricingByType = (type) => {
   const pricing = {
     daily: 50,
-    weekly: 300,
-    monthly: 1000,
-    quarterly: 2700,
+    weekly: 250,
+    monthly: 1200,
+    quarterly: 3000,
     annual: 10000,
   };
   return pricing[type] || 0;
