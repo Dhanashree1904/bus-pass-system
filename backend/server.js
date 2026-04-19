@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/database");
 const errorHandler = require("./middleware/errorHandler");
+const fs = require("fs");
+const https = require("https");
 
 // Import routes
 const authRoutes = require("./routes/auth");
@@ -39,7 +41,20 @@ app.get("/health", (req, res) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
-});
+
+// Use HTTPS in production
+if (process.env.NODE_ENV === "production") {
+  const options = {
+    key: fs.readFileSync("./server.key"),
+    cert: fs.readFileSync("./server.crt"),
+  };
+  https.createServer(options, app).listen(PORT, () => {
+    console.log(`Server running on port ${PORT} (HTTPS)`);
+    console.log(`Environment: ${process.env.NODE_ENV}`);
+  });
+} else {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} (HTTP)`);
+    console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+  });
+}
