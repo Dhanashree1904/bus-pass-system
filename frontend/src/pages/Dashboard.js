@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { passAPI } from "../services/api";
 import QRCode from "qrcode.react";
 import "../styles/Dashboard.css";
@@ -14,6 +15,7 @@ const passIcons = {
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [passes, setPasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPassType, setSelectedPassType] = useState("daily");
@@ -63,8 +65,20 @@ const Dashboard = () => {
       <nav className="navbar">
         <div className="nav-content">
           <h1>Bus Pass System</h1>
-          <div>
+          <div className="nav-links">
             <span>Welcome, {user?.name}</span>
+            <button onClick={() => navigate("/profile")} className="nav-link-btn">
+              👤 Profile
+            </button>
+            <button onClick={() => navigate("/faqs")} className="nav-link-btn">
+              ❓ FAQs
+            </button>
+            <button onClick={() => navigate("/support")} className="nav-link-btn">
+              💬 Support
+            </button>
+            <button onClick={() => navigate("/admin")} className="nav-link-btn">
+              ⚙️ Admin
+            </button>
             <button onClick={logout} className="logout-btn">
               Logout
             </button>
