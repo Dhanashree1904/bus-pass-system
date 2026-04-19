@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const QRCode = require("qrcode");
 
 const busPassSchema = new mongoose.Schema({
   user: {
@@ -53,7 +52,7 @@ const busPassSchema = new mongoose.Schema({
   },
 });
 
-// Generate QR Code before saving
+// Generate QR Code data before saving
 busPassSchema.pre("save", async function (next) {
   if (!this.qrCode) {
     try {
@@ -62,7 +61,7 @@ busPassSchema.pre("save", async function (next) {
         userId: this.user,
         validUntil: this.validUntil,
       };
-      this.qrCode = await QRCode.toDataURL(JSON.stringify(qrData));
+      this.qrCode = JSON.stringify(qrData);
     } catch (error) {
       next(error);
     }
