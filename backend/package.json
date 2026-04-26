@@ -8,7 +8,11 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["bus", "pass", "transportation"],
+  "keywords": [
+    "bus",
+    "pass",
+    "transportation"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -20,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^8.0.5",
     "qrcode": "^1.5.3",
     "stripe": "^14.7.0"
   },
