@@ -11,6 +11,7 @@ const Register = () => {
     phone: "",
   });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       await register(
         formData.name,
@@ -30,11 +32,38 @@ const Register = () => {
         formData.password,
         formData.phone
       );
-      navigate("/dashboard");
+      setSuccess(true);
+      setFormData({ name: "", email: "", password: "", phone: "" });
+      
+      // Redirect to login after 3 seconds with message
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     }
   };
+
+  if (success) {
+    return (
+      <div className="auth-container">
+        <div className="auth-form" style={{ textAlign: "center" }}>
+          <h2 style={{ color: "green" }}>✅ Registration Successful!</h2>
+          <p>A verification email has been sent to your inbox.</p>
+          <p>Please check your email and click the verification link to activate your account.</p>
+          <p style={{ marginTop: "20px", color: "#666" }}>
+            You will be redirected to login in 3 seconds...
+          </p>
+          <button 
+            onClick={() => navigate("/login")}
+            style={{ marginTop: "20px" }}
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-container">

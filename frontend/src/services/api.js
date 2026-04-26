@@ -20,6 +20,8 @@ export const authAPI = {
   register: (data) => api.post("/auth/register", data),
   login: (data) => api.post("/auth/login", data),
   getProfile: () => api.get("/auth/profile"),
+  verifyEmail: (data) => api.post("/auth/verify-email", data),
+  resendVerificationEmail: (data) => api.post("/auth/resend-verification-email", data),
 };
 
 // Pass API
